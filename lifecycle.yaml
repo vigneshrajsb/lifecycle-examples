@@ -31,7 +31,7 @@ services:
           engine: 'buildkit'
         defaultTag: 'main'
         app:
-          dockerfilePath: 'Dockerfile-fail.frontend'
+          dockerfilePath: 'Dockerfile.frontend'
           ports:
             - 3000
           env:
