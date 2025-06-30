@@ -7,7 +7,7 @@ This repository serves as an example for configuring ephemeral development envir
 
 Lifecycle will automatically use the `lifecycle.yaml` config from your branch to spin up a new ephemeral environment reflecting your changes.
 
-Here's the starter workflow:
+Here's the starter workflow:asdasd
 
 1.  **Fork this repository**
 
