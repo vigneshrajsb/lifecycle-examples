@@ -37,24 +37,8 @@ environment:
         script: "echo $BUILD_UUID && curl -X POST https://google.com"
       env:
         BUILD_UUID: "{{buildUUID}}"
-    - name: "Flaky hook"
-      type: "command"
-      state: "deployed"
-      command:
-        image: "curlimages/curl:latest"
-        script: "exit 1"
-      env:
-        BUILD_UUID: "{{buildUUID}}"
-    - state: 'deployed'
-      type: 'codefresh'
-      name: 'lfc: deployed'
-      description: 'Lifecycle deployed webhook'
-      pipelineId: '6716ee061897917c1bf1ab5c'
-      trigger: 'deploy-lfc'
-      env:
-        branch: 'main'   
-        ENV: 'lifecycle'
-        ns: '{{{ namespace }}}'
+
+
 
 services:
   - name: "frontend"
