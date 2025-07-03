@@ -19,6 +19,17 @@ environment:
     - name: "backend"
   optionalServices:
     - name: "cache"
+  webhooks:
+    - name: "Test Docker Webhook"
+      state: "deployed"
+      type: "docker"
+      docker:
+        image: "alpine:latest"
+        command: ["echo"]
+        args: ["Hello from webhook!"]
+      env:
+        BUILD_UUID: "{{uuid}}"
+
 
 services:
   - name: "frontend"
