@@ -29,7 +29,6 @@ environment:
         args: ["Hello from webhook!"]
       env:
         BUILD_UUID: "{{uuid}}"
- webhooks:
     - name: "Slack Notification"
       type: "command"
       state: "deployed"
