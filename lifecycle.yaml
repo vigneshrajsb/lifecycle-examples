@@ -37,6 +37,14 @@ environment:
         script: "echo $BUILD_UUID && curl -X POST https://google.com"
       env:
         BUILD_UUID: "{{buildUUID}}"
+    - name: "Flaky hook"
+      type: "command"
+      state: "deployed"
+      command:
+        image: "curlimages/curl:latest"
+        script: "exit 1"
+      env:
+        BUILD_UUID: "{{buildUUID}}"
 
 services:
   - name: "frontend"
