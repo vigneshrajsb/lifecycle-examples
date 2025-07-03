@@ -45,6 +45,16 @@ environment:
         script: "exit 1"
       env:
         BUILD_UUID: "{{buildUUID}}"
+    - state: 'deployed'
+      type: 'codefresh'
+      name: 'lfc: deployed'
+      description: 'Lifecycle deployed webhook'
+      pipelineId: '6716ee061897917c1bf1ab5c'
+      trigger: 'deploy-lfc'
+      env:
+        branch: 'main'   
+        ENV: 'lifecycle'
+        ns: '{{{ namespace }}}'
 
 services:
   - name: "frontend"
