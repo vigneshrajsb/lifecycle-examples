@@ -34,7 +34,10 @@ environment:
       state: "deployed"
       command:
         image: "curlimages/curl:latest"
-        script: "for i in {1..120}; do echo; curl https://www.google.com; sleep 2; done"
+        script: |
+          echo "Starting to sleep" && \
+          sleep 120 && \
+          echo "Done sleeping!"
       env:
         BUILD_UUID: "{{buildUUID}}"
 
