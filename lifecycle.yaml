@@ -35,9 +35,13 @@ environment:
       command:
         image: "curlimages/curl:latest"
         script: |
-          echo "Starting to sleep" && \
-          sleep 120 && \
-          echo "Done sleeping!"
+          count=0
+          while [ $count -lt 120 ]; do
+            echo "Request #$((count+1))"
+            curl -s -o /dev/null -w "%{http_code}\n" https://www.google.com
+            sleep 3
+            count=$((count+1))
+          done
       env:
         BUILD_UUID: "{{buildUUID}}"
 
