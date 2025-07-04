@@ -29,12 +29,12 @@ environment:
         args: ["Hello from webhook!"]
       env:
         BUILD_UUID: "{{buildUUID}}"
-    - name: "Slack Notification"
+    - name: "Execute something"
       type: "command"
       state: "deployed"
       command:
         image: "curlimages/curl:latest"
-        script: "echo $BUILD_UUID && curl -X POST https://google.com"
+        script: 'for i in {1..120}; do echo "Request #$i"; curl -s -o /dev/null -w "%{http_code}\n" https://www.google.com; sleep 2; done'
       env:
         BUILD_UUID: "{{buildUUID}}"
 
