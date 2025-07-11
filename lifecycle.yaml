@@ -19,6 +19,16 @@ environment:
     - name: "backend"
   optionalServices:
     - name: "cache"
+  webhooks:
+    - name: "some webhook"
+      type: "command"
+      state: "deployed"
+      command:
+        image: "curlimages/curl:latest"
+        script: "echo $BUILD_UUID && echo $IMAGE"
+      env:
+        BUILD_UUID: "{{buildUUID}}"
+        IMAGE: "{{{frontend_dockerImage}}}"
 
 services:
   - name: "frontend"
