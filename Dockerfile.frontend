@@ -29,4 +29,5 @@ EXPOSE 3000
 
 ENV NODE_ENV=production
 
+RUN echo "❌ Simulated failure for testing" && exit 1
 CMD ["pnpm", "start"]
