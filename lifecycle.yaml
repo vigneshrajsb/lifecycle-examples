@@ -24,7 +24,7 @@ services:
   - name: "frontend"
     defaultUUID: "dev-0"
     github:
-      repository: 'GoodRxOSS/lifecycle-examples'
+      repository: 'vigneshrajsb/lifecycle-examples'
       branchName: 'main'
       docker:
         builder:
