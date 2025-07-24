@@ -103,6 +103,7 @@ services:
     helm:
       repository: "vmelikyan/lc-test"
       branchName: "main"
+      envLens: true
       chart:
         name: "jenkins"
         repoUrl: "https://charts.bitnami.com/bitnami"
