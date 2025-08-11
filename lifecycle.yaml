@@ -20,6 +20,7 @@ environment:
     - name: "jenkins"
   optionalServices:
     - name: "cache"
+    - name: "cf-build"
 
 services:
   - name: "frontend"
@@ -108,8 +109,19 @@ services:
         name: "jenkins"
         repoUrl: "https://charts.bitnami.com/bitnami"
         version: "13.6.8"
-        values:
-          - "service.type=ClusterIP"
-          - "ingress.enabled=true"
-          - "ingress.hostname={{jenkins_publicUrl}}"
-          - "ingress.ingressClassName=nginx"
+
+  - name: 'cf-build'
+    defaultUUID: 'good-dev-0'
+    codefresh:
+      repository: 'vigneshrajsb/lc-test'
+      branchName: 'main'
+      env:
+        UUID: '{{cf-build_UUID}}'
+      deploy:
+        pipelineId: '6716ee061897917c1bf1ab5c'
+        trigger: 'deploy-lfc'
+      destroy:
+        pipelineId: '6716ee4c49599aeeb280b84a'
+        trigger: 'destroy-lfc'
+      deployment:
+        public: false
