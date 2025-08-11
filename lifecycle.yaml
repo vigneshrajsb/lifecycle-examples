@@ -29,8 +29,6 @@ services:
       repository: 'vigneshrajsb/lifecycle-examples'
       branchName: 'main'
       docker:
-        builder:
-          engine: 'buildkit'
         defaultTag: 'main'
         app:
           dockerfilePath: 'Dockerfile.frontend'
