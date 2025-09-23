@@ -41,6 +41,7 @@ services:
             API_URL: "https://{{{backend_publicUrl}}}"
             CACHE_URL: "{{{cache_internalHostname}}}"
             WES_IS: "GOAT"
+            TEST: "true"
       deployment:
         public: true
         readiness:
