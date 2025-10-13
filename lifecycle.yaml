@@ -47,14 +47,9 @@ services:
           tcpSocketPort: 3000
         hostnames:
           defaultInternalHostname: 'frontend-dev-0'
-        node_affinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - arm64          
+        node_selector:
+          kubernetes.io/arch: "arm64"
+          kubernetes.io/os: "macos"
           
   - name: "backend"
     requires:
@@ -81,7 +76,7 @@ services:
                   - key: kubernetes.io/arch
                     operator: In
                     values:
-                      - amd64
+                      - arm64
           
   - name: "db"
     defaultUUID: "dev-0"
