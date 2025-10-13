@@ -47,8 +47,6 @@ services:
           tcpSocketPort: 3000
         hostnames:
           defaultInternalHostname: 'frontend-dev-0'
-        node_selector:
-          vignesh: 'test'
         node_affinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -83,7 +81,7 @@ services:
                   - key: kubernetes.io/arch
                     operator: In
                     values:
-                      - arm64
+                      - amd64
           
   - name: "db"
     defaultUUID: "dev-0"
