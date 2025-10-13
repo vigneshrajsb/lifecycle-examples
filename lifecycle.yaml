@@ -47,6 +47,9 @@ services:
           tcpSocketPort: 3000
         hostnames:
           defaultInternalHostname: 'frontend-dev-0'
+        node_selector:
+          vignesh: 'test'
+          
           
   - name: "backend"
     requires:
