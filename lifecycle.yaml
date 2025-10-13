@@ -49,7 +49,14 @@ services:
           defaultInternalHostname: 'frontend-dev-0'
         node_selector:
           vignesh: 'test'
-          
+        node_affinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64          
           
   - name: "backend"
     requires:
@@ -69,6 +76,14 @@ services:
         public: true
         readiness:
           tcpSocketPort: 8080
+        node_affinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64
           
   - name: "db"
     defaultUUID: "dev-0"
