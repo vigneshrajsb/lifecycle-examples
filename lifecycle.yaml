@@ -70,7 +70,7 @@ services:
   - name: "db"
     defaultUUID: "dev-0"
     docker:
-      dockerImage: "lifecycleoss/example-db"
+      dockerImage: "lifecycleoss/example-db-fail"
       defaultTag: "0.1.0"
       ports:
         - 5432
