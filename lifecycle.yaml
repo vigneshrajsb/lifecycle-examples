@@ -87,7 +87,7 @@ services:
   - name: "cache"
     defaultUUID: "dev-0"
     docker:
-      dockerImage: "redis-fail-8768123123"
+      dockerImage: "redis"
       defaultTag: "8.0.2"
       ports:
         - 6379
