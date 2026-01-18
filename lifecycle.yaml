@@ -113,3 +113,4 @@ services:
           - "ingress.enabled=true"
           - "ingress.hostname={{jenkins_publicUrl}}"
           - "ingress.ingressClassName=nginx"
+          - "image.repository: bitnamilegacy/jenkins"
