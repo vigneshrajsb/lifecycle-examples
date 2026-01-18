@@ -27,7 +27,7 @@ services:
     github:
       repository: 'vigneshrajsb/lifecycle-examples'
       branchName: 'main'
-      envLens: false
+      envLens: true
       docker:
         builder:
           engine: 'buildkit'
@@ -56,7 +56,6 @@ services:
     docker:
       dockerImage: "lifecycleoss/example-backend"
       defaultTag: "0.1.0"
-      envLens: true
       ports:
         - 8080
       env:
