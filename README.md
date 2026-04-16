@@ -13,7 +13,7 @@ Here's the starter workflow:
 
 2.  **Install the github app you created with Lifecycle**
 
-3.  **Modify `README.md` file and create a pull request from Github UI**
+3.  **Modify `asdasdREADME.md` file and create a pull request from Github UI**
     
 4.  **Open a Pull Request:**
 
