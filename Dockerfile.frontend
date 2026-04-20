@@ -2,6 +2,7 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 ENV COREPACK_DEFAULT_TO_LATEST=0
+ARG COMMENT_ENV_PROBE=unset
 
 RUN corepack enable 
 
@@ -11,6 +12,9 @@ COPY package.json ./
 RUN pnpm install
 
 COPY . .
+
+# Bake a build-only marker into a static asset so PR comment env overrides are easy to verify.
+RUN printf '%s\n' "${COMMENT_ENV_PROBE}" > public/build-probe.txt
 
 RUN pnpm run build
 

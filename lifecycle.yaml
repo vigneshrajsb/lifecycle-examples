@@ -36,6 +36,7 @@ services:
           ports:
             - 3000
           env:
+            COMMENT_ENV_PROBE: "default-build-value"
             COMPONENT: "app"
             ENV: "lifecycle"
             API_URL: "https://{{{backend_publicUrl}}}"
