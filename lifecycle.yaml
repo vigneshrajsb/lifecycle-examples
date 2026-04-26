@@ -99,6 +99,40 @@ services:
         public: false
         readiness:
           tcpSocketPort: 6379
+  - name: "remote-fixture-a"
+    defaultUUID: "dev-0"
+    github:
+      repository: "vigneshrajsb/lifecycle-examples"
+      branchName: "main"
+      docker:
+        builder:
+          engine: "buildkit"
+        defaultTag: "main"
+        app:
+          dockerfilePath: "Dockerfile.remote-fixture"
+          ports:
+            - 8080
+      deployment:
+        public: false
+        readiness:
+          tcpSocketPort: 8080
+  - name: "remote-fixture-b"
+    defaultUUID: "dev-0"
+    github:
+      repository: "vigneshrajsb/lifecycle-examples"
+      branchName: "main"
+      docker:
+        builder:
+          engine: "buildkit"
+        defaultTag: "main"
+        app:
+          dockerfilePath: "Dockerfile.remote-fixture"
+          ports:
+            - 8080
+      deployment:
+        public: false
+        readiness:
+          tcpSocketPort: 8080
   - name: "jenkins"
     helm:
       repository: "vmelikyan/lc-test"
