@@ -20,7 +20,6 @@ environment:
   defaultServices:
     - name: "frontend"
     - name: "backend"
-    - name: "jenkins"
   optionalServices:
     - name: "cache"
 
