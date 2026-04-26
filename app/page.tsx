@@ -32,7 +32,7 @@ export default function Home() {
           <CardTitle className="text-xl">Tasks Page</CardTitle>
           <CardDescription>
             <ul className="list-disc pl-5 text-base">
-              <li>Check out the data in the Tasks page.</li>
+              <li>Check out the data in the Tasks page for E2E redeploy coverage.</li>
               <li>This is being fetched from the backend service. </li>
               <li>
                 When optional in the environment, the data is pulled from the
