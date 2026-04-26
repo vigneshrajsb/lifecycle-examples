@@ -14,6 +14,8 @@
 
 environment:
   autoDeploy: true
+  ignoreFiles:
+    - "remote-env-ignore/**"
   defaultServices:
     - name: "frontend"
     - name: "backend"
@@ -100,6 +102,10 @@ services:
         readiness:
           tcpSocketPort: 6379
   - name: "remote-fixture-a"
+    ignoreFiles:
+      - "remote-fixture-a-ignore/**"
+      - "remote-fixture-shared-ignore/**"
+      - "remote-compare-ignore/**"
     defaultUUID: "dev-0"
     github:
       repository: "vigneshrajsb/lifecycle-examples"
@@ -117,6 +123,10 @@ services:
         readiness:
           tcpSocketPort: 8080
   - name: "remote-fixture-b"
+    ignoreFiles:
+      - "remote-fixture-b-ignore/**"
+      - "remote-fixture-shared-ignore/**"
+      - "remote-compare-ignore/**"
     defaultUUID: "dev-0"
     github:
       repository: "vigneshrajsb/lifecycle-examples"
