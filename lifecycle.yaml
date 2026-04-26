@@ -14,6 +14,7 @@
 
 environment:
   autoDeploy: true
+  # E2E: lifecycle config changes must always redeploy, even with ignoreFiles.
   ignoreFiles:
     - "docs/**"
   defaultServices:
