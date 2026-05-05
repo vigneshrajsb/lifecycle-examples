@@ -1,84 +1,67 @@
-# Copyright 2025 GoodRx, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 environment:
   autoDeploy: true
   ignoreFiles:
-    - "remote-env-ignore/**"
+    - remote-env-ignore/**
   defaultServices:
-    - name: "frontend"
-    - name: "backend"
-    - name: "jenkins"
+    - name: frontend
+    - name: backend
+    - name: jenkins
   optionalServices:
-    - name: "cache"
-
+    - name: cache
 services:
-  - name: "frontend"
-    defaultUUID: "dev-0"
+  - name: frontend
+    defaultUUID: dev-0
     github:
-      repository: 'vigneshrajsb/lifecycle-examples'
-      branchName: 'main'
+      repository: vigneshrajsb/lifecycle-examples
+      branchName: codex/lfc-remote-config-fixture
       docker:
         builder:
-          engine: 'buildkit'
-        defaultTag: 'main'
+          engine: buildkit
+        defaultTag: main
         app:
-          dockerfilePath: 'Dockerfile.frontend'
+          dockerfilePath: Dockerfile.frontend
           ports:
             - 3000
           env:
-            COMPONENT: "app"
-            ENV: "lifecycle"
-            API_URL: "https://{{{backend_publicUrl}}}"
-            CACHE_URL: "{{{cache_internalHostname}}}"
-            WES_IS: "GOAT"
+            COMPONENT: app
+            ENV: lifecycle
+            API_URL: https://{{{backend_publicUrl}}}
+            CACHE_URL: '{{{cache_internalHostname}}}'
+            WES_IS: GOAT
       deployment:
         public: true
         readiness:
           tcpSocketPort: 3000
         hostnames:
-          defaultInternalHostname: 'frontend-dev-0'
-          
-  - name: "backend"
+          defaultInternalHostname: frontend-dev-0
+  - name: backend
     requires:
-      - name: "db"
-    defaultUUID: "dev-0"
+      - name: db
+    defaultUUID: dev-0
     docker:
-      dockerImage: "lifecycleoss/example-backend"
-      defaultTag: "0.1.0"
+      dockerImage: lifecycleoss/example-backend
+      defaultTag: 0.1.0
       ports:
         - 8080
       env:
-        COMPONENT: "server"
-        ENV: "lifecycle"
-        DATABASE_URL: "{{{db_internalHostname}}}"
-        DATABASE_PORT: "5432"
+        COMPONENT: server
+        ENV: lifecycle
+        DATABASE_URL: '{{{db_internalHostname}}}'
+        DATABASE_PORT: '5432'
       deployment:
         public: true
         readiness:
           tcpSocketPort: 8080
-          
-  - name: "db"
-    defaultUUID: "dev-0"
+  - name: db
+    defaultUUID: dev-0
     docker:
-      dockerImage: "lifecycleoss/example-db"
-      defaultTag: "0.1.0"
+      dockerImage: lifecycleoss/example-db
+      defaultTag: 0.1.0
       ports:
         - 5432
       env:
-        COMPONENT: "db"
-        ENV: "lifecycle"
+        COMPONENT: db
+        ENV: lifecycle
         POSTGRES_DB: tasks
         POSTGRES_USER: lifecycle
         POSTGRES_PASSWORD: mysecretpassword
@@ -86,74 +69,73 @@ services:
         public: false
         readiness:
           tcpSocketPort: 5432
-          
-  - name: "cache"
-    defaultUUID: "dev-0"
+  - name: cache
+    defaultUUID: dev-0
     docker:
-      dockerImage: "redis"
-      defaultTag: "8.0.2"
+      dockerImage: redis
+      defaultTag: 8.0.2
       ports:
         - 6379
       env:
-        COMPONENT: "cache"
-        ENV: "lifecycle"
+        COMPONENT: cache
+        ENV: lifecycle
       deployment:
         public: false
         readiness:
           tcpSocketPort: 6379
-  - name: "remote-fixture-a"
+  - name: remote-fixture-a
     ignoreFiles:
-      - "remote-fixture-a-ignore/**"
-      - "remote-fixture-shared-ignore/**"
-      - "remote-compare-ignore/**"
-    defaultUUID: "dev-0"
+      - remote-fixture-a-ignore/**
+      - remote-fixture-shared-ignore/**
+      - remote-compare-ignore/**
+    defaultUUID: dev-0
     github:
-      repository: "vigneshrajsb/lifecycle-examples"
-      branchName: "main"
+      repository: vigneshrajsb/lifecycle-examples
+      branchName: codex/lfc-remote-config-fixture
       docker:
         builder:
-          engine: "buildkit"
-        defaultTag: "main"
+          engine: buildkit
+        defaultTag: main
         app:
-          dockerfilePath: "Dockerfile.remote-fixture"
+          dockerfilePath: Dockerfile.remote-fixture
           ports:
             - 8080
       deployment:
         public: false
         readiness:
           tcpSocketPort: 8080
-  - name: "remote-fixture-b"
+  - name: remote-fixture-b
     ignoreFiles:
-      - "remote-fixture-b-ignore/**"
-      - "remote-fixture-shared-ignore/**"
-      - "remote-compare-ignore/**"
-    defaultUUID: "dev-0"
+      - remote-fixture-b-ignore/**
+      - remote-fixture-shared-ignore/**
+      - remote-compare-ignore/**
+    defaultUUID: dev-0
     github:
-      repository: "vigneshrajsb/lifecycle-examples"
-      branchName: "main"
+      repository: vigneshrajsb/lifecycle-examples
+      branchName: codex/lfc-remote-config-fixture
       docker:
         builder:
-          engine: "buildkit"
-        defaultTag: "main"
+          engine: buildkit
+        defaultTag: main
         app:
-          dockerfilePath: "Dockerfile.remote-fixture"
+          dockerfilePath: Dockerfile.remote-fixture
           ports:
             - 8080
       deployment:
         public: false
         readiness:
           tcpSocketPort: 8080
-  - name: "jenkins"
+  - name: jenkins
     helm:
-      repository: "vmelikyan/lc-test"
-      branchName: "main"
+      repository: vmelikyan/lc-test
+      branchName: main
       envLens: true
       chart:
-        name: "jenkins"
-        repoUrl: "https://charts.bitnami.com/bitnami"
-        version: "13.6.8"
+        name: jenkins
+        repoUrl: https://charts.bitnami.com/bitnami
+        version: 13.6.8
         values:
-          - "service.type=ClusterIP"
-          - "ingress.enabled=true"
-          - "ingress.hostname={{jenkins_publicUrl}}"
-          - "ingress.ingressClassName=nginx"
+          - service.type=ClusterIP
+          - ingress.enabled=true
+          - ingress.hostname={{jenkins_publicUrl}}
+          - ingress.ingressClassName=nginx
