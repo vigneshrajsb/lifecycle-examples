@@ -4,7 +4,7 @@ environment:
     - name: api
     - name: worker
   optionalServices:
-    - name: cache
+    - name: cache-renamed
 services:
   - name: api
     defaultUUID: dev-0
@@ -62,7 +62,7 @@ services:
         public: false
         readiness:
           tcpSocketPort: 5432
-  - name: cache
+  - name: cache-renamed
     defaultUUID: dev-0
     docker:
       dockerImage: redis
