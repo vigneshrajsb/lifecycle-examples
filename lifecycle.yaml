@@ -3,8 +3,7 @@ environment:
   defaultServices:
     - name: api
     - name: worker
-  optionalServices:
-    - name: cache
+  optionalServices: []
 services:
   - name: api
     defaultUUID: dev-0
@@ -62,17 +61,3 @@ services:
         public: false
         readiness:
           tcpSocketPort: 5432
-  - name: cache
-    defaultUUID: dev-0
-    docker:
-      dockerImage: redis
-      defaultTag: 8.0.2
-      ports:
-        - 6379
-      env:
-        COMPONENT: cache
-        ENV: lifecycle
-      deployment:
-        public: false
-        readiness:
-          tcpSocketPort: 6379
