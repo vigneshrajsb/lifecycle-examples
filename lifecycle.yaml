@@ -1,12 +1,12 @@
 environment:
   autoDeploy: true
   defaultServices:
-    - name: api
+    - name: api-renamed
     - name: worker
   optionalServices:
     - name: cache
 services:
-  - name: api
+  - name: api-renamed
     defaultUUID: dev-0
     github:
       repository: vigneshrajsb/lifecycle-examples
