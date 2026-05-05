@@ -2,7 +2,7 @@ environment:
   autoDeploy: true
   defaultServices:
     - name: api
-    - name: worker
+    - name: worker-renamed
   optionalServices:
     - name: cache
 services:
@@ -27,7 +27,7 @@ services:
         public: true
         readiness:
           tcpSocketPort: 3000
-  - name: worker
+  - name: worker-renamed
     requires:
       - name: db
     defaultUUID: dev-0
