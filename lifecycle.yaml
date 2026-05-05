@@ -1,32 +1,10 @@
 environment:
   autoDeploy: true
   defaultServices:
-    - name: api
     - name: worker
   optionalServices:
     - name: cache
 services:
-  - name: api
-    defaultUUID: dev-0
-    github:
-      repository: vigneshrajsb/lifecycle-examples
-      branchName: main
-      docker:
-        builder:
-          engine: buildkit
-        defaultTag: main
-        app:
-          dockerfilePath: Dockerfile.frontend
-          ports:
-            - 3000
-          env:
-            COMPONENT: api
-            ENV: lifecycle
-            COMMENT_ENV_PROBE: lfc-e2e-deleted-default-1777941103578
-      deployment:
-        public: true
-        readiness:
-          tcpSocketPort: 3000
   - name: worker
     requires:
       - name: db
