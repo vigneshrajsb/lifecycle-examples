@@ -153,6 +153,8 @@ services:
         repoUrl: "https://charts.bitnami.com/bitnami"
         version: "13.6.8"
         values:
+          - "image.repository=bitnamilegacy/jenkins"
+          - "image.tag=2.504.2-debian-12-r0"
           - "service.type=ClusterIP"
           - "ingress.enabled=true"
           - "ingress.hostname={{jenkins_publicUrl}}"
