@@ -16,7 +16,7 @@ services:
     configuration:
       data:
         TPL_FEATURE_MODE: "on"
-        TPL_HTML: "a&b<c>\"d'e"
+        TPL_HTML: "a&b<c>'e"
 
   - name: "probe"
     defaultUUID: "dev-0"
