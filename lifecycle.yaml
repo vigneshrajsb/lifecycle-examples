@@ -1,55 +1,161 @@
-# Copyright 2025 GoodRx, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
+# Test branch for GoodRxOSS/lifecycle#265: every template variable is rendered into the probe service env.
 environment:
   autoDeploy: true
-  ignoreFiles:
-    - "remote-env-ignore/**"
   defaultServices:
-    - name: "frontend"
+    - name: "probe"
     - name: "backend"
+    - name: "remote-fixture-a"
+    - name: "tpl-config"
   optionalServices:
     - name: "cache"
+    - name: "frontend"
     - name: "jenkins"
 
 services:
+  - name: "tpl-config"
+    configuration:
+      data:
+        TPL_FEATURE_MODE: "on"
+        TPL_HTML: "a&b<c>\"d'e"
+
+  - name: "probe"
+    defaultUUID: "dev-0"
+    github:
+      repository: "vigneshrajsb/lifecycle-examples"
+      branchName: "test/template-vars-pr265"
+      docker:
+        builder:
+          engine: "buildkit"
+        defaultTag: "main"
+        app:
+          dockerfilePath: "Dockerfile.remote-fixture"
+          ports:
+            - 8080
+          env:
+            "TPL_G_BUILDUUID": "{{{buildUUID}}}"
+            "TPL_G_BUILDSHA": "{{{buildSHA}}}"
+            "TPL_G_NAMESPACE": "{{{namespace}}}"
+            "TPL_G_PULLREQUESTNUMBER": "{{{pullRequestNumber}}}"
+            "TPL_G_BRANCHNAME": "{{{branchName}}}"
+            "TPL_G_REPONAME": "{{{repoName}}}"
+            "TPL_S_PROBE__BRANCHNAME": "{{{probe_branchName}}}"
+            "TPL_S_PROBE__IPADDRESS": "{{{probe_ipAddress}}}"
+            "TPL_S_PROBE__PUBLICURL": "{{{probe_publicUrl}}}"
+            "TPL_S_PROBE__UUID": "{{{probe_UUID}}}"
+            "TPL_S_PROBE__INTERNALHOSTNAME": "{{{probe_internalHostname}}}"
+            "TPL_S_PROBE__DOCKERIMAGE": "{{{probe_dockerImage}}}"
+            "TPL_S_PROBE__INITDOCKERIMAGE": "{{{probe_initDockerImage}}}"
+            "TPL_S_PROBE__SHA": "{{{probe_sha}}}"
+            "TPL_S_PROBE__NAMESPACE": "{{{probe_namespace}}}"
+            "TPL_S_BACKEND__BRANCHNAME": "{{{backend_branchName}}}"
+            "TPL_S_BACKEND__IPADDRESS": "{{{backend_ipAddress}}}"
+            "TPL_S_BACKEND__PUBLICURL": "{{{backend_publicUrl}}}"
+            "TPL_S_BACKEND__UUID": "{{{backend_UUID}}}"
+            "TPL_S_BACKEND__INTERNALHOSTNAME": "{{{backend_internalHostname}}}"
+            "TPL_S_BACKEND__DOCKERIMAGE": "{{{backend_dockerImage}}}"
+            "TPL_S_BACKEND__INITDOCKERIMAGE": "{{{backend_initDockerImage}}}"
+            "TPL_S_BACKEND__SHA": "{{{backend_sha}}}"
+            "TPL_S_BACKEND__NAMESPACE": "{{{backend_namespace}}}"
+            "TPL_S_DB__BRANCHNAME": "{{{db_branchName}}}"
+            "TPL_S_DB__IPADDRESS": "{{{db_ipAddress}}}"
+            "TPL_S_DB__PUBLICURL": "{{{db_publicUrl}}}"
+            "TPL_S_DB__UUID": "{{{db_UUID}}}"
+            "TPL_S_DB__INTERNALHOSTNAME": "{{{db_internalHostname}}}"
+            "TPL_S_DB__DOCKERIMAGE": "{{{db_dockerImage}}}"
+            "TPL_S_DB__INITDOCKERIMAGE": "{{{db_initDockerImage}}}"
+            "TPL_S_DB__SHA": "{{{db_sha}}}"
+            "TPL_S_DB__NAMESPACE": "{{{db_namespace}}}"
+            "TPL_S_REMOTE_FIXTURE_A__BRANCHNAME": "{{{remote-fixture-a_branchName}}}"
+            "TPL_S_REMOTE_FIXTURE_A__IPADDRESS": "{{{remote-fixture-a_ipAddress}}}"
+            "TPL_S_REMOTE_FIXTURE_A__PUBLICURL": "{{{remote-fixture-a_publicUrl}}}"
+            "TPL_S_REMOTE_FIXTURE_A__UUID": "{{{remote-fixture-a_UUID}}}"
+            "TPL_S_REMOTE_FIXTURE_A__INTERNALHOSTNAME": "{{{remote-fixture-a_internalHostname}}}"
+            "TPL_S_REMOTE_FIXTURE_A__DOCKERIMAGE": "{{{remote-fixture-a_dockerImage}}}"
+            "TPL_S_REMOTE_FIXTURE_A__INITDOCKERIMAGE": "{{{remote-fixture-a_initDockerImage}}}"
+            "TPL_S_REMOTE_FIXTURE_A__SHA": "{{{remote-fixture-a_sha}}}"
+            "TPL_S_REMOTE_FIXTURE_A__NAMESPACE": "{{{remote-fixture-a_namespace}}}"
+            "TPL_S_CACHE__BRANCHNAME": "{{{cache_branchName}}}"
+            "TPL_S_CACHE__IPADDRESS": "{{{cache_ipAddress}}}"
+            "TPL_S_CACHE__PUBLICURL": "{{{cache_publicUrl}}}"
+            "TPL_S_CACHE__UUID": "{{{cache_UUID}}}"
+            "TPL_S_CACHE__INTERNALHOSTNAME": "{{{cache_internalHostname}}}"
+            "TPL_S_CACHE__DOCKERIMAGE": "{{{cache_dockerImage}}}"
+            "TPL_S_CACHE__INITDOCKERIMAGE": "{{{cache_initDockerImage}}}"
+            "TPL_S_CACHE__SHA": "{{{cache_sha}}}"
+            "TPL_S_CACHE__NAMESPACE": "{{{cache_namespace}}}"
+            "TPL_S_FRONTEND__BRANCHNAME": "{{{frontend_branchName}}}"
+            "TPL_S_FRONTEND__IPADDRESS": "{{{frontend_ipAddress}}}"
+            "TPL_S_FRONTEND__PUBLICURL": "{{{frontend_publicUrl}}}"
+            "TPL_S_FRONTEND__UUID": "{{{frontend_UUID}}}"
+            "TPL_S_FRONTEND__INTERNALHOSTNAME": "{{{frontend_internalHostname}}}"
+            "TPL_S_FRONTEND__DOCKERIMAGE": "{{{frontend_dockerImage}}}"
+            "TPL_S_FRONTEND__INITDOCKERIMAGE": "{{{frontend_initDockerImage}}}"
+            "TPL_S_FRONTEND__SHA": "{{{frontend_sha}}}"
+            "TPL_S_FRONTEND__NAMESPACE": "{{{frontend_namespace}}}"
+            "TPL_S_JENKINS__BRANCHNAME": "{{{jenkins_branchName}}}"
+            "TPL_S_JENKINS__IPADDRESS": "{{{jenkins_ipAddress}}}"
+            "TPL_S_JENKINS__PUBLICURL": "{{{jenkins_publicUrl}}}"
+            "TPL_S_JENKINS__UUID": "{{{jenkins_UUID}}}"
+            "TPL_S_JENKINS__INTERNALHOSTNAME": "{{{jenkins_internalHostname}}}"
+            "TPL_S_JENKINS__DOCKERIMAGE": "{{{jenkins_dockerImage}}}"
+            "TPL_S_JENKINS__INITDOCKERIMAGE": "{{{jenkins_initDockerImage}}}"
+            "TPL_S_JENKINS__SHA": "{{{jenkins_sha}}}"
+            "TPL_S_JENKINS__NAMESPACE": "{{{jenkins_namespace}}}"
+            "TPL_HOSTPORT_API_BACKEND_PUBLICURL": "{{{api-backend_publicUrl}}}"
+            "TPL_CFG_FEATURE_MODE": "{{{TPL_FEATURE_MODE}}}"
+            "TPL_CFG_HTML_TRIPLE": "{{{TPL_HTML}}}"
+            "TPL_CFG_HTML_DOUBLE": "{{TPL_HTML}}"
+            "TPL_E_DOUBLE_BRACES": "{{backend_publicUrl}}"
+            "TPL_E_UNKNOWN_VAR": "x{{{doesNotExist}}}y"
+            "TPL_E_UNKNOWN_SVC_UUID": "{{{ghost_UUID}}}"
+            "TPL_E_UNKNOWN_SVC_HOST": "{{{ghost_internalHostname}}}"
+            "TPL_E_UNKNOWN_SVC_URL": "{{{ghost_publicUrl}}}"
+            "TPL_E_UNKNOWN_SVC_SHA": "x{{{ghost_sha}}}y"
+            "TPL_E_LITERAL_BRACES": "literal-{{ not a var }}-end"
+            "TPL_E_SECRET_REF": "pre-{{aws:lfc/template-test:password}}-post"
+            "TPL_E_MIXED": "postgres://{{{db_internalHostname}}}:5432/{{{buildUUID}}}?ns={{{namespace}}}&sha={{{buildSHA}}}&branch={{{branchName}}}"
+            "TPL_E_HOST_PORT_PATH": "http://{{{backend_internalHostname}}}:8080/health"
+            "TPL_E_HOST_SUFFIX": "{{{backend_internalHostname}}}-x"
+            "TPL_E_TWO_HOSTS": "{{{backend_internalHostname}}},{{{db_internalHostname}}}"
+            "TPL_E_PLAIN_HYPHENS": "a-b-c--d"
+            "TPL-E-HYPHEN-KEY": "{{{buildUUID}}}"
+            "TPL_E_URL_WITH_SCHEME": "https://{{{backend_publicUrl}}}/api?env={{{buildUUID}}}"
+        init:
+          dockerfilePath: "Dockerfile.template-init"
+          env:
+            "TPL_INIT_BUILD_UUID": "{{{buildUUID}}}"
+            "TPL_INIT_NAMESPACE": "{{{namespace}}}"
+            "TPL_INIT_PROBE_INIT_IMAGE": "{{{probe_initDockerImage}}}"
+            "TPL_INIT_PROBE_IMAGE": "{{{probe_dockerImage}}}"
+            "TPL_INIT_DB_HOST": "{{{db_internalHostname}}}"
+            "TPL_INIT_CACHE_HOST": "{{{cache_internalHostname}}}"
+            "TPL_INIT_MIXED": "redis://{{{cache_internalHostname}}}:6379/{{{buildUUID}}}"
+            "TPL_INIT_SECRET_REF": "pre-{{aws:lfc/template-test:password}}-post"
+      deployment:
+        public: true
+        readiness:
+          tcpSocketPort: 8080
+
   - name: "frontend"
     defaultUUID: "dev-0"
     github:
-      repository: 'vigneshrajsb/lifecycle-examples'
-      branchName: 'main'
+      repository: "vigneshrajsb/lifecycle-examples"
+      branchName: "main"
       docker:
         builder:
-          engine: 'buildkit'
-        defaultTag: 'main'
+          engine: "buildkit"
+        defaultTag: "main"
         app:
-          dockerfilePath: 'Dockerfile.frontend'
+          dockerfilePath: "Dockerfile.frontend"
           ports:
             - 3000
-          env:
-            COMPONENT: "app"
-            ENV: "lifecycle"
-            API_URL: "https://{{{backend_publicUrl}}}"
-            CACHE_URL: "{{{cache_internalHostname}}}"
-            WES_IS: "GOAT"
       deployment:
         public: true
         readiness:
           tcpSocketPort: 3000
         hostnames:
-          defaultInternalHostname: 'frontend-dev-0'
-          
+          defaultInternalHostname: "frontend-dev-0"
+
   - name: "backend"
     requires:
       - name: "db"
@@ -68,7 +174,10 @@ services:
         public: true
         readiness:
           tcpSocketPort: 8080
-          
+        network:
+          hostPortMapping:
+            api: 8080
+
   - name: "db"
     defaultUUID: "dev-0"
     docker:
@@ -86,7 +195,7 @@ services:
         public: false
         readiness:
           tcpSocketPort: 5432
-          
+
   - name: "cache"
     defaultUUID: "dev-0"
     docker:
@@ -94,22 +203,16 @@ services:
       defaultTag: "8.0.2"
       ports:
         - 6379
-      env:
-        COMPONENT: "cache"
-        ENV: "lifecycle"
       deployment:
         public: false
         readiness:
           tcpSocketPort: 6379
+
   - name: "remote-fixture-a"
-    ignoreFiles:
-      - "remote-fixture-a-ignore/**"
-      - "remote-fixture-shared-ignore/**"
-      - "remote-compare-ignore/**"
     defaultUUID: "dev-0"
     github:
       repository: "vigneshrajsb/lifecycle-examples"
-      branchName: "main"
+      branchName: "test/template-vars-pr265"
       docker:
         builder:
           engine: "buildkit"
@@ -122,27 +225,7 @@ services:
         public: false
         readiness:
           tcpSocketPort: 8080
-  - name: "remote-fixture-b"
-    ignoreFiles:
-      - "remote-fixture-b-ignore/**"
-      - "remote-fixture-shared-ignore/**"
-      - "remote-compare-ignore/**"
-    defaultUUID: "dev-0"
-    github:
-      repository: "vigneshrajsb/lifecycle-examples"
-      branchName: "main"
-      docker:
-        builder:
-          engine: "buildkit"
-        defaultTag: "main"
-        app:
-          dockerfilePath: "Dockerfile.remote-fixture"
-          ports:
-            - 8080
-      deployment:
-        public: false
-        readiness:
-          tcpSocketPort: 8080
+
   - name: "jenkins"
     helm:
       repository: "vmelikyan/lc-test"
@@ -153,10 +236,4 @@ services:
         repoUrl: "https://charts.bitnami.com/bitnami"
         version: "13.6.8"
         values:
-          - "global.security.allowInsecureImages=true"
-          - "image.repository=bitnamilegacy/jenkins"
-          - "image.tag=2.504.2-debian-12-r0"
-          - "service.type=ClusterIP"
-          - "ingress.enabled=true"
           - "ingress.hostname={{jenkins_publicUrl}}"
-          - "ingress.ingressClassName=nginx"
