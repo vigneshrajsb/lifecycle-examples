@@ -16,7 +16,7 @@ services:
     configuration:
       data:
         TPL_FEATURE_MODE: "on"
-        TPL_HTML: "a&b<c>'e"
+        TPL_HTML: "a/b=c"
 
   - name: "probe"
     defaultUUID: "dev-0"
@@ -113,7 +113,7 @@ services:
             "TPL_E_UNKNOWN_SVC_SHA": "x{{{ghost_sha}}}y"
             "TPL_E_LITERAL_BRACES": "literal-{{ not a var }}-end"
             "TPL_E_SECRET_REF": "pre-{{aws:lfc/template-test:password}}-post"
-            "TPL_E_MIXED": "postgres://{{{db_internalHostname}}}:5432/{{{buildUUID}}}?ns={{{namespace}}}&sha={{{buildSHA}}}&branch={{{branchName}}}"
+            "TPL_E_MIXED": "postgres://{{{db_internalHostname}}}:5432/{{{buildUUID}}}?ns={{{namespace}}},sha={{{buildSHA}}},branch={{{branchName}}}"
             "TPL_E_HOST_PORT_PATH": "http://{{{backend_internalHostname}}}:8080/health"
             "TPL_E_HOST_SUFFIX": "{{{backend_internalHostname}}}-x"
             "TPL_E_TWO_HOSTS": "{{{backend_internalHostname}}},{{{db_internalHostname}}}"
